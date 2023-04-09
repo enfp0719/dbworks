@@ -20,12 +20,15 @@ CREATE TABLE student(
 );
 
 -- 학생 자료 삽입
-INSERT INTO student VALUES (20211234, '이강', 22, '여', '서울시 종로구', '소프트웨어학과', 301);
-INSERT INTO student VALUES (20211235, '박대양', 25, '남', '서울시 성북구', '전기전자공학과', 501);
-INSERT INTO student VALUES (20211236, '한비야', 33, '여', '수원시 장안구', '전기전자공학과', 501);
-INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES (20211237, '김산', 33, '화학공학과', 402);
-INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES (20211237, '김산', 33, '화학공학과', 402);
-INSERT INTO student(snumber, sname, age, cname, pnumber) VALUES (20211238, '김산', 15, '소프트웨어학과', 302);
+INSERT INTO student VALUES (20211234, '이강', 22, '여', '서울시 종로구', '소프트웨어학과', 301, 3.5);
+INSERT INTO student VALUES (20211232, '박대양', 25, '남', '서울시 성북구', '전기전자공학과', 501, 4.5);
+INSERT INTO student VALUES (20211236, '한비야', 33, '여', '수원시 장안구', '전기전자공학과', 501, 4.0);
+INSERT INTO student(snumber, sname, age, cname, pnumber, point) VALUES (20211237, '김산', 33, '화학공학과', 402, 3.5);
+INSERT INTO student(snumber, sname, age, cname, pnumber, point) VALUES (20211237, '김산', 33, '화학공학과', 402, 4.3);
+INSERT INTO student(snumber, sname, age, cname, pnumber, point) VALUES (20211238, '김산', 15, '소프트웨어학과', 302,3.7);
+INSERT INTO student VALUES (20211248, '강감찬', 43, '남', '수원시 장안구', '전기전자공학과', 501, 4.5);
+INSERT INTO student VALUES (20211240, '이순신', 37, '남', '수원시 장안구', '소프트웨어학과', 302, 3.6);
+INSERT INTO student VALUES (20211241, '이강', 22, '남', '수원시 장안구', '소프트웨어학과', 301, 4.3);
 
 -- 학생 자료 검색
 SELECT * FROM student;
@@ -62,4 +65,79 @@ WHERE address IS NULL;
 --자료 수정(UPDATE SET)
 UPDATE professor SET major = '전기공학개론' WHERE pnumber = 601;
 
-DELETE FROM professor 
+DELETE FROM student WHERE point is NULL;
+Rollback;
+
+ --학생이름, 나이, 성별, 전공, 교수이름
+ SELECT *
+ FROM student
+ WHERE address IS NULL;
+ 
+ select student. *, professor.pname
+ from student, professor
+ where professor.pnumber = student.pnumber;
+ 
+ SELECT st.sname as 학생이름, st.age as 나이, st.gender as 성별, st.cname as 전공, pr.pname as 교수
+ FROM student st, professor pr
+ WHERE st.pnumber = pr.pnumber
+ ORDER BY st.sname;
+ 
+ -- 그룹(GROUP)함수 Y = f(x)
+ -- 학생의 수를 출력하시오.
+ SELECT COUNT (sname) 학생수
+ FROM student;
+ 
+ -- 학생 나이의 평균을 구하시오
+ SELECT AVG(age) 평균나이, MAX(age) 최고나이, MIN(age) 최저나이
+ FROM student;
+ 
+ -- 학점(point) 칼럼 추가
+ ALTER TABLE student MODIFY point NUMBER(3, 2);
+ 
+ -- 학점이 NULL인 학생 삭제
+ DELETE FROM student;
+ WHERE point IS NULL;
+ 
+ -- 학생의 학생수, 학점 평균
+SELECT COUNT (*) 학생수, AVG(point) 학점평균
+FROM student;
+
+-- 학점이 4이상인 학생을 검색하시오.
+ 
+SELECT AVG(point)
+ FROM student;
+ 
+SELECT * FROM student
+WHERE point BETWEEN 4 AND 5;
+
+-- 학점이 4이상이고 성별이 '여'인 학생을 검색하시오.
+SELECT *
+FROM student
+WHERE point >= 4.0 AND gender = '여';
+ 
+-- 그룹별로 데이터 처리 ; GROUP BY 구문을 사용
+-- 학과별 학점 평균을 검색하시오.(조건: 4.0미만인 자료)
+-- 학생이름, 성별, 학과명, 학과전화번호
+SELECT cname 학과명, AVG(Point) 학점평균
+FROM student
+Where point >= 4.0 AND gender = '여';
+
+-- 학생이름, 성별, 학점, 학과명, 학과전화번호, 교수님 이름 출력
+SELECT 
+st.sname 학생이름,
+st.gender 성별,
+st.point 학점,
+cl.cname 학과명, 
+cl.ctel 학과전화번호
+pr.pname 교수 이름
+FROM student st, class cl, professor pr
+Where point >= 4.0 AND gender = '여'
+  AND st.cname = cl.cname
+  AND st.pnumber = cl.pnumber;
+
+
+
+ DESC Student;
+ 
+ 
+ 
