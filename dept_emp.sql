@@ -15,21 +15,9 @@ CREATE TABLE emp(
     REFERENCES dept(deptno) ON DELETE CASCADE
 );
 
--- 칼럼 추가
-ALTER TABLE emp 
-  ADD (age NUMBER(3) DEFAULT 1);
-  
--- 칼럼 변경
-ALTER TABLE emp
-  MODIFY ename VARCHAR2(40) NOT NULL;
-  
--- 칼럼 삭제
-ALTER TABLE emp
-  DROP COLUMN age;
-  
--- 칼럼명 변경
-ALTER TABLE emp
-  RENAME COLUMN ename TO new_ename;
+
+-- 칼럼 이름 변경
+ALTER TABLE emp RENAME COLUMN sal TO salary;
 
 -- 자료 삽입
 INSERT INTO dept VALUES ('1000', '인사팀');
@@ -42,6 +30,8 @@ INSERT INTO emp VALUES (102, '연개소문', 3000000, SYSDATE, '1002');
 INSERT INTO emp VALUES (103, '세종대왕', 5000000, SYSDATE, '1000');
 INSERT INTO emp VALUES (104, '신사임당', 3000000, SYSDATE, '1002');
 
+UPDATE dept SET deptname = '영업팀'
+WHERE deptno = '1002';
 -- 자료 검색
 SELECT * FROM dept;
 SELECT * FROM emp;
