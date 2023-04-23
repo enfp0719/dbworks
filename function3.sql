@@ -83,10 +83,64 @@ COUNT(NVL(cnt,0))칼럼_개수,
 SUM(cnt)칼럼_합계
 FROM test;
 
-SELECT id, cnt, NVL(cnt, 0)
+SELECT id, cnt, NVL(cnt, 0) 
 FROM test;
 
 SELECT COUNT(NVL(CNT, 0)) FROM TEST;
 SELECT SUM(NVL(CNT, 0)) / 4 FROM test;
 SELECT AVG(NVL(CNT, 0)) FROM test;
 SELECT MIN(NVL(CNT, 5)) / FROM test;
+
+-- DECODE(칼럼, 조건, 참인값, 거짓인값) - 조건 처리에 대한 결과값을 반환
+SELECT * FROM emp;
+
+-- 성별 칼럼 추가하기 : '남자', '여자'
+ALTER TABLE emp ADD gender VARCHAR2(6);
+
+DESC emp;
+
+-- DECODE(칼럼, 조건, 참인값, 거짓인값) - 조건 처리에 대한 결과값을 반환
+-- 사원의 성별이 '남자'이면 'M'으로 표기하고, '여자'이면 'F'로 표기
+SELECT ename,
+       salary,
+       DECODE(gender, '남자', 'M', 'F') gender
+FROM emp;
+
+-- 성별이 null인 경우 '남자'와 '여자'를 입력하시오(UPDATE)
+UPDATE emp
+SET gender = '남자'
+WHERE empno IN (100, 101, 102, 103);
+
+UPDATE emp
+SET gender = '여자'
+WHERE empno IN (104, 105);
+
+-- CASE ~ WHEN ~ END구문
+SELECT ename,
+       salary,
+       CASE
+          WHEN gender = '남자' THEN 'M'
+          WHEN gender = '여자' THEN 'F'
+         -- ELSE 'F'
+        END gender
+FROM emp;
+
+SELECT * FROM emp;
+-- 급여가 500만원 ㅣㅇ상이면 '과장', 300만원 이상이면 '대리', 300만원 미만이면 사원으로 표기
+ SELECT ename,
+        salary,
+        CASE
+          WHEN salary >= 5000000 THEN '과장'
+          WHEN salary >= 3000000 THEN '대리'
+          ELSE '사원'
+        END 직급
+FROM emp; 
+
+SELECT ename,
+       salary,
+       DECODE(salary, 5000000, '과장', 3000000, '대리', '사원') 직급
+FROM emp;
+
+SELECT *
+FROM emp
+WHERE ename LIKE '_관순';

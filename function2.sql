@@ -56,3 +56,24 @@ SELECT ename, salary,
               TRUNC(salary/30, 1) 결과2,
               TRUNC(salary/30, -1)결과3
 FROM emp;
+
+SELECT LPAD('sky123', 10, '*') FROM DUAL;
+SELECT RPAD('sky123', 10, '*') FROM DUAL;
+
+SELECT CONCAT('sky', '1234') FROM DUAL;
+
+SELECT 'sky' || '1234' FROM DUAL;
+
+SELECT LENGTH('구름') 문자수, LENGTHB('구름') 바이트수
+FROM DUAL;
+
+SELECT SYSDATE, SYSDATE + 3, SYSDATE -3 FROM DUAL;
+
+SELECT TO DATE('2023/4/1') + 10 결과1,
+       TO DATE('2023/4/1') - 10 결과2
+FROM DUAL;
+
+SELECT 
+   ADD_MONTHS(SYSDATE, 2) 더하기_결과,
+   ADD_MONTHS(SYSDATE, -2) 빼기_결과
+FROM DUAL;

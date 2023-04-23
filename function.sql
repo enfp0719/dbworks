@@ -33,6 +33,45 @@ SELECT AVG(salary) 급여평균
 FROM emp;
 
 -- 숫자 타입 함수
+-- 사원 급여의 평균을 구하시오. (SUM / COUNT)
+SELECT SUM(salary) / COUNT(*) 급여평균
+FROM emp; 
+
+SELECT ROUND(AVG(salary), -1) 급여평균
+FROM emp;
+
+SELECT deptno,ename
+       SUM(salary) 급여합계,
+       ROUND(AVG(salary), -2) 급여평균
+FROM emp
+GROUP BY ROLLUP(deptno);
+
+SELECT deptno,
+       SUM(salary) 급여합계,
+       ROUND(AVG(salary), -2) 급여평균
+FROM emp
+GROUP BY ROLLUP(deptno);
+
+-- 급여가 많은 순으로 내림차순 정렬하시오.
+SELECT *
+FROM emp
+ORDER BY SALARY DESC;
+
+-- 급여 순으로 순위 정하기 
+SELECT ename,
+       salary,
+       RANK() OVER(ORDER BY salary DESC) 급여
+FROM emp;
+
+SELECT ename,
+       salary,
+       RANK() OVER(ORDER BY salary DESC) 급여_RANK,
+       DENSE_RANK() OVER(ORDER BY salary DESC) 급여_DENSE_RANK
+FROM emp;
+
+
+
+
 -- 숫자를 반올림한다. : ROUND(숫자, 자리수)
 SELECT ROUND(3.87, 1) FROM DUAL;
 SELECT ROUND(12351, -2) FROM DUAL;
